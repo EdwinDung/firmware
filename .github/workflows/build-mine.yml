@@ -1,0 +1,20 @@
+name: Build My Variant
+on: workflow_dispatch
+jobs:
+  build-xiao:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build xiao_s3_wio_header
+        uses: meshtastic/gh-action-firmware@main
+        with:
+          pio_platform: esp32s3
+          pio_env: xiao_s3_wio_header
+          pio_target: build
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-xiao_s3_wio_header
+          path: |
+            release/*.bin
+            release/*.elf
